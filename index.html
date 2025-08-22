@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Portfolio – Pranay Kumar</title>
+  <meta name="description" content="Personal portfolio of Your Name – projects, resume, and contact details." />
+  <style>
+    :root {
+      --bg: #0b101b;
+      --bg-elev: #121a2a;
+      --text: #e6ecff;
+      --muted: #a7b0c7;
+      --primary: #6ea8ff;
+      --accent: #7ee787;
+      --card: #0f1625;
+      --border: #22304b;
+      --shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .light {
+      --bg: #f6f8ff;
+      --bg-elev: #ffffff;
+      --text: #17223b;
+      --muted: #4b5a7a;
+      --primary: #2b6cff;
+      --accent: #0e9f6e;
+      --card: #ffffff;
+      --border: #e6ebff;
+      --shadow: 0 10px 25px rgba(21, 41, 89, .12);
+    }
+    * { box-sizing: border-box }
+    html { scroll-behavior: smooth }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg); color: var(--text); line-height: 1.6;
+    }
+    a { color: var(--primary); text-decoration: none }
+    .container { width: min(1100px, 92vw); margin: 0 auto }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: .9rem 0 }
+    .brand { display:flex; align-items:center; gap:.6rem; font-weight: 700; letter-spacing:.3px }
+    .brand .logo { width: 34px; height: 34px; border-radius: 10px; display:grid; place-items:center; background: linear-gradient(135deg, var(--primary), var(--accent)); color:#081019; font-weight:900 }
+    nav ul { display: flex; gap: 1.1rem; list-style: none; padding: 0; margin: 0 }
+    nav a { color: var(--text); opacity: .85 }
+    nav a:hover { opacity: 1 }
+    .right { display:flex; align-items:center; gap:.6rem }
+    .btn {
+      display:inline-grid; place-items:center; border:1px solid var(--border); background: var(--bg-elev); color: var(--text); padding:.55rem .9rem; border-radius: 999px; box-shadow: var(--shadow);
+    }
+    .btn.primary { background: linear-gradient(135deg, var(--primary), #7aa7ff); color: #051028; border-color: transparent; font-weight: 700 }
+    .icon { font-size: 1.2rem }
+
+    /* Mobile menu */
+    .hamburger { display:none; background:none; border:1px solid var(--border); border-radius:10px; padding:.5rem }
+    #mobileMenu { display:none; }
+    @media (max-width: 820px){
+      nav ul { display:none }
+      .hamburger { display:block }
+      #mobileMenu { display:block; border-top:1px solid var(--border); background: var(--bg-elev); }
+      #mobileMenu a { display:block; padding: .9rem 0; color: var(--text); border-bottom:1px dashed var(--border); opacity:.9 }
+      #mobileMenu a:last-child { border-bottom:0 }
+    }
+
+    /* Hero */
+    #hero { padding: 4.5rem 0 2rem }
+    .hero-grid { display:grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items:center }
+    .pill { display:inline-flex; align-items:center; gap:.5rem; padding:.3rem .7rem; background: var(--card); border:1px solid var(--border); border-radius:999px; font-size:.85rem; opacity:.9 }
+    .hero-title { font-size: clamp(2rem, 3.8vw + 1rem, 3.2rem); line-height: 1.15; margin:.5rem 0 1rem }
+    .hero-sub { color: var(--muted); font-size: 1.05rem }
+    .hero-cta { display:flex; gap:.7rem; margin-top: 1.1rem; flex-wrap: wrap }
+    .hero-card { background: var(--card); border:1px solid var(--border); border-radius: 18px; padding: 1.1rem; box-shadow: var(--shadow) }
+    .tag { display:inline-block; padding:.25rem .6rem; border:1px solid var(--border); background: var(--bg-elev); border-radius: 999px; font-size:.8rem; margin:.25rem .3rem .25rem 0 }
+    .avatar { width: 160px; height: 160px; border-radius: 22px; object-fit: cover; box-shadow: var(--shadow); border: 2px solid var(--border) }
+    @media (max-width: 920px){ .hero-grid { grid-template-columns: 1fr } .avatar { width: 120px; height: 120px } }
+
+    /* Sections */
+    section { padding: 3.5rem 0 }
+    .section-title { font-size: 1.8rem; margin:0 0 1rem }
+    .section-sub { color: var(--muted); margin-top: .2rem }
+
+    /* Cards grid */
+    .grid { display:grid; gap: 1rem }
+    .grid.projects { grid-template-columns: repeat(3, 1fr) }
+    .grid.two { grid-template-columns: repeat(2, 1fr) }
+    @media (max-width: 1000px){ .grid.projects { grid-template-columns: repeat(2, 1fr) } }
+    @media (max-width: 680px){ .grid.projects, .grid.two { grid-template-columns: 1fr } }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; box-shadow: var(--shadow) }
+    .card h3 { margin:.4rem 0 .2rem; font-size: 1.05rem }
+    .card p { color: var(--muted); font-size: .95rem }
+    .card .meta { display:flex; align-items:center; justify-content: space-between; gap:.6rem; margin-top:.7rem }
+    .card .links { display:flex; gap:.5rem; flex-wrap: wrap }
+
+    /* Skills */
+    .skills { display:flex; flex-wrap: wrap; gap:.5rem }
+    .chip { padding:.5rem .7rem; background: var(--bg-elev); border:1px solid var(--border); border-radius: 999px; font-weight: 600; font-size:.85rem }
+
+    /* Timeline */
+    .timeline { position:relative; padding-left: 1.4rem }
+    .timeline:before { content:""; position:absolute; left:.48rem; top:.2rem; bottom:.2rem; width:2px; background: var(--border) }
+    .item { position:relative; margin: 0 0 1.1rem }
+    .item:before { content:""; position:absolute; left:-.15rem; top:.35rem; width:10px; height:10px; background: var(--primary); border-radius:50% }
+    .item h4 { margin: 0 0 .2rem }
+    .item .muted { color: var(--muted); font-size: .9rem }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--muted) }
+
+    /* Utilities */
+    .muted { color: var(--muted) }
+    .spacer { height: .6rem }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0 }
+
+    /* Back to top */
+    #toTop { position: fixed; right: 1rem; bottom: 1rem; padding:.6rem .8rem; border-radius: 999px; border:1px solid var(--border); background: var(--bg-elev); display:none }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#hero" class="brand" aria-label="Home">
+        <span class="logo">V</span>
+        <span>Venkatolla Pranay Kumar Goud</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Internships</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="btn" href="INFOSYS RESUME.pdf" download>Download Resume</a></li>
+          <li><button class="btn" id="themeToggle" aria-label="Toggle dark mode">🌗</button></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+    <div class="container" id="mobileMenu" hidden>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#Internships">Interships</a>
+      <a href="#contact">Contact</a>
+      <a href="INFOSYS RESUME.pdf" download>Download CV</a>
+      <button class="btn" id="themeToggleM">Toggle Theme</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="pill">👋 Hello! I’m <strong>Venkatolla Pranay Kumar Goud</strong></span>
+          <h1 class="hero-title">B.Tech-Electronics and Communication Engineering </h1>
+          <p class="hero-sub"> <strong>Fresher</strong></p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#contact">Contact Me</a>
+          </div>
+          <div class="spacer"></div>
+          <div>
+            <span class="tag">✅ Accessible</span>
+            <span class="tag">⚡ Performance‑focused</span>
+            <span class="tag">📱 Responsive</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img class="avatar" src="me.jpg" alt="Portrait of Your Name" />
+          <p class="muted" style="margin-top:.12rem">Currently open to work as Front‑End developer and Java Programmer.</p>
+          <div class="skills" aria-label="Key skills">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Java</span>
+            <span class="chip">DSA</span>
+            <span class="chip">C</span>
+            <span class="chip">Python</span>
+            <span class="chip">Matlab</span>
+            <span class="chip">Verilog</span>
+            <span class="chip">IOT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container">
+      <h2 class="section-title">About</h2>
+      <p class="section-sub">My name is Pranay Kumar. I recently completed my B.Tech in Electronics and Communication Engineering from CMR Institute of Technology,Hyderabad.</p>
+      <div class="spacer"></div>
+      <div>
+        <a class="tag">&#9993;venkatollapranaykumargoud@gmail.com</a>
+        <a class="tag">&#128222;8499887717</a>
+        <a class="tag">&#128204;Medchal,Hyderabad,India</a> 
+        <a class="tag">&#128197;22-10-2003</a> 
+        <a class="tag">&#9794;Male</a>
+        <a href="https://www.linkedin.com/in/venkatolla-pranay-kumar-goud-514413371" target="_blank">
+  <img src="linkedin-logo.png" alt="LinkedIn" width="30">
+</a>
+
+      </div>
+      <div class="grid one">
+        <div class="card">
+          <h3>Summary</h3>
+          <p> Looking forward for an opportunity where I can utilize my hands on experience and skills in contributing 
+effectively to the success of the organization and also further improve my Professional skills.</p>
+        </div>
+       
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills" role="list">
+        <span class="chip" role="listitem">HTML</span>
+        <span class="chip" role="listitem">CSS </span>
+        <span class="chip" role="listitem">JavaScript</span>
+        <span class="chip" role="listitem">Java</span>
+        <span class="chip" role="listitem">DSA</span>
+        <span class="chip" role="listitem">Python</span>
+        <span class="chip" role="listitem">C</span>
+        <span class="chip" role="listitem">Matlab</span>
+        <span class="chip" role="listitem">Verilog</span>
+        <span class="chip" role="listitem">IOT</span>
+
+      </div>
+    </section>
+
+    <section id="projects" class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="grid two">
+        <!-- Project 1 -->
+        <article class="card" tabindex="0">
+          <img src="https://img2.teletype.in/files/5c/4d/5c4d2b80-a0ba-4deb-8766-d15697e04594.jpeg" alt="Screenshot of Project Alpha" style="width:100%; height:170px; object-fit:cover; border-radius:12px" />
+          <h3>E-AGRICULTURE : IRRIGATION SYSTEM BASED ON WEATHER FORECASTING</h3>
+          <p> The "Smart Irrigation System using Weather Forecasting" stands as a noteworthy milestone in the realm of 
+agricultural technology, harnessing the capabilities of Internet of Things (IoT) devices to revolutionize 
+irrigation practices. This cutting-edge system excels in providing real-time monitoring and control, 
+empowering farmers to make well - informed decisions tailored to the ever-changing environmental 
+conditions. Inspired by the success of a referenced project in efficiently alerting emergency services during car 
+accidents, our irrigation system takes a parallel stride in addressing agricultural challenges.</p>
+        <div class="meta">
+            <div class="tags">
+              <span class="tag">IOT</span>
+              <span class="tag">Embedded Systems</span>
+            </div>
+        </div>
+        </article>
+        <!-- Project 2 -->
+        <article class="card" tabindex="0">
+          <img src="https://www.projectsof8051.com/project-photos/1645-sms-based-bank-locker-security-system-using-gsm-technology-22.jpg" alt="Screenshot of Project Beta" style="width:100%; height:170px; object-fit:cover; border-radius:12px" />
+          <h3> INTERNET OF THINGS (IOT) FOR BANK LOCKER SECURITY SYSTEM</h3>
+          <p> This article presents the design and implementation of an IoT based bank locker security system utilizing the 
+ESP32-CAM microcontroller and Telegram messaging platform. By installing a camera, wireless connectivity 
+and an instant messaging module, the system aims at providing security and convenient door access control. 
+ESP32-CAM is recording images of persons entering the door, sending a notification via telegram to authorized 
+users. This system allows users to control lockers via remote access from anywhere with the Internet 
+connection, monitor entrance and permit or reject access at any time.</p>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">IOT</span>
+              <span class="tag">Embedded Systems</span>
+              
+            </div>
+            
+          </div>
+        </article>
+       
+    </section>
+
+    <section id="experience" class="container">
+      <h2 class="section-title">Internships</h2>
+      <div class="timeline">
+        <div class="item">
+          <h4>Python Internship • Edugene technology</h4>
+          <div class="muted">Aug 2023 – Oct 2023 • Remote</div>
+          <p>During my internship at Edugene Technologies, I developed strong Python 
+programming skills and learned to apply them in practical scenarios. Through 
+consistent practice, I gained a deeper understanding of problem-solving techniques 
+and how to approach challenges effectively. This experience has significantly 
+increased my confidence in using Python to solve real-world problems.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Want to work together or have a question? Drop a message.</p>
+      <form class="card" id="contactForm" action="#" novalidate>
+        <label>
+          <span class="sr-only">Name</span>
+          <input name="name" placeholder="Your name" required style="width:100%; padding:.9rem; border-radius:12px; border:1px solid var(--border); background:var(--bg-elev); color:var(--text)" />
+        </label>
+        <div class="spacer"></div>
+        <label>
+          <span class="sr-only">Email</span>
+          <input type="email" name="email" placeholder="Email address" required style="width:100%; padding:.9rem; border-radius:12px; border:1px solid var(--border); background:var(--bg-elev); color:var(--text)" />
+        </label>
+        <div class="spacer"></div>
+        <label>
+          <span class="sr-only">Message</span>
+          <textarea name="message" placeholder="Your message" rows="5" required style="width:100%; padding:.9rem; border-radius:12px; border:1px solid var(--border); background:var(--bg-elev); color:var(--text)"></textarea>
+        </label>
+        <div class="spacer"></div>
+        <div style="display:flex; gap:.6rem; align-items:center">
+          <button class="btn primary" type="submit">Send Message</button>
+          <span id="formMsg" class="muted" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap">
+      <div>© <span id="year"></span> Your Name</div>
+      <div style="display:flex; gap:.7rem">
+        <a href="mailto:venkatollapranaykumargoud@gmail.com" Email Me>📧</a>
+        <a href="https://github.com/pranaykumar2210" target="_blank" rel="noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="https://www.linkedin.com/in/venkatolla-pranay-kumar-goud-514413371" target="_blank" rel="noreferrer" aria-label="LinkedIn">LinkedIn</a>
+        <a href="#hero" aria-label="Back to top">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top">↑</button>
+
+  <script>
+    // Theme Toggle with persistence
+    const applyTheme = (mode) => {
+      if(mode === 'light') document.documentElement.classList.add('light');
+      else document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', mode);
+    }
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    applyTheme(savedTheme);
+
+    const toggleTheme = () => {
+      const isLight = document.documentElement.classList.contains('light');
+      applyTheme(isLight ? 'dark' : 'light');
+    }
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleM').addEventListener('click', toggleTheme);
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const hidden = mobileMenu.hasAttribute('hidden');
+      mobileMenu.toggleAttribute('hidden');
+      hamburger.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+    });
+
+    // Back to top visibility
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 800 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Contact form (front‑end validation demo)
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if(!form.checkValidity()){
+        formMsg.textContent = 'Please fill in all required fields.';
+        return;
+      }
+      // Example success state (replace with your backend / Formspree action)
+      formMsg.textContent = 'Thanks! Your message has been sent.';
+      form.reset();
+    });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
